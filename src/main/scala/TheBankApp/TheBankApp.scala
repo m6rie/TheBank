@@ -7,7 +7,7 @@ import io.AnsiColor._
 import scala.util.Random
 import scala.util.control.Breaks.break
 import java.sql.{Connection, DriverManager, PreparedStatement}
-import Database.methods.{adminDeleteDBAccount, adminLoginDB, allCustomersDB, checkingExistingID, selectCustomerByIdDB, selectCustomerByLastnameDB}
+import Database.methods.{adminDeleteDBAccount, adminLoginDB, allCustomersDB, selectCustomerByIdDB, selectCustomerByLastnameDB}
 
 
 class TheBankApp(name:String) {

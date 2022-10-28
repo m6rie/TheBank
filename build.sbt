@@ -6,3 +6,5 @@ lazy val root = (project in file("."))
   .settings(
     name := "BankPostTraining"
   )
+
+libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.30"
