@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d559e086-88a0-4d03-b537-d87d65c16df0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
+    <list default="true" id="d559e086-88a0-4d03-b537-d87d65c16df0" name="Changes" comment="Project with DB and users and admin functionalities">
+      <change afterPath="$PROJECT_DIR$/src/main/scala/Database/AccountsMethods.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/Database/AdminsMethods.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/Database/LoginMethods.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Database/methods.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Database/methods.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Database/methods.scala" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/TheBankApp/Accounts.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/TheBankApp/Accounts.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/TheBankApp/TheBankApp.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/TheBankApp/TheBankApp.scala" afterDir="false" />
     </list>
@@ -64,6 +64,14 @@
       <option name="presentableId" value="Default" />
       <updated>1666695050477</updated>
     </task>
+    <task id="LOCAL-00001" summary="Project with DB and users and admin functionalities">
+      <created>1666990959954</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666990959954</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -76,5 +84,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Project with DB and users and admin functionalities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project with DB and users and admin functionalities" />
   </component>
 </project>

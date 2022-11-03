@@ -1,48 +1,12 @@
 package Database
 
 import java.sql._
-import TheBankApp.AccountMethods.{accountMenuDB}
-
+import TheBankApp.AccountMethods.accountMenuDB
 import scala.io.StdIn.{readDouble, readInt}
 
-object methods extends App {
-  def allCustomersDB() = {
-    val driver = "com.mysql.cj.jdbc.Driver"
-    val url = "jdbc:mysql://localhost:3306/theSbank"
-    val username = "root"
-    val password = "FtE73.mP11"
+object AccountsMethods {
 
-    var connection: Connection = null
-    try {
-      Class.forName(driver)
-      connection = DriverManager.getConnection(url, username, password)
-
-      val statement = connection.createStatement()
-      val resultSet = statement.executeQuery("SELECT * FROM theSbank.accounts")
-      while (resultSet.next()) {
-        val username = resultSet.getString("client_username")
-        val first_name = resultSet.getString("client_first_name")
-        val last_name = resultSet.getString("client_last_name")
-        val DOB = resultSet.getString("client_date_of_birth")
-        val balance = resultSet.getDouble("balance")
-        val interestRate = resultSet.getDouble("interest_rate")
-        val creditCard = resultSet.getString("credit_card")
-        val id = resultSet.getInt("id")
-
-        println(s"Account number: ${id}\n" +
-          s"Username: ${username}\n" +
-          s"First name: ${first_name}\n" +
-          s"Last name: ${last_name}\n" +
-          s"Client date of birth: ${DOB}\n" +
-          s"Account balance: ${balance}\n" +
-          s"Interest rate: ${interestRate}\n" +
-          s"Account credit card number: ${creditCard}\n" +
-          s"------------------------------")
-      }
-    }
-  }
-
-  def createUserAccountDB(firstName: String,lastName: String,DOB: String, client_username: String,client_password: String, balance: Double, creditCard: String, interestRate: Double) = {
+  def createUserAccountDB(firstName: String, lastName: String, DOB: String, client_username: String, client_password: String, balance: Double, creditCard: String, interestRate: Double) = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
@@ -69,10 +33,9 @@ object methods extends App {
     finally {
       connection.close()
     }
-
   }
 
-  def selectCustomerByIdDB(id: Int): Unit = {
+  def userCheckingPersonalInfo(user: String): Unit = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
@@ -84,7 +47,7 @@ object methods extends App {
       connection = DriverManager.getConnection(url, username, password)
 
       val statement = connection.createStatement()
-      val resultSet = statement.executeQuery(s"SELECT * FROM accounts WHERE id = $id ")
+      val resultSet = statement.executeQuery(s"SELECT * FROM accounts WHERE client_username LIKE '%$user%'")
       while (resultSet.next()) {
         val usernameDB = resultSet.getString("client_username")
         val first_name = resultSet.getString("client_first_name")
@@ -95,56 +58,22 @@ object methods extends App {
         val creditCard = resultSet.getString("credit_card")
         val id = resultSet.getInt("id")
 
-        println(s"Account number: ${id}\n" +
+        println(s"Here are your personal information:\n" +
+          s"Account number: ${id}\n" +
           s"Username: ${usernameDB}\n" +
           s"First name: ${first_name}\n" +
           s"Last name: ${last_name}\n" +
-          s"Client date of birth: ${DOB}\n" +
-          s"Account balance: ${balance}\n" +
-          s"Account interest rate: ${interestRate}\n" +
-          s"Account credit card number: ${creditCard}\n" +
-          s"------------------------------\n")
+          s"Date of birth: ${DOB}\n" +
+          s"Balance: ${balance}\n" +
+          s"Interest rate: ${interestRate}\n" +
+          s"Credit card number: ${creditCard}\n"
+          //          s"\n------------------------------------\n"
+        )
       }
     }
   }
 
-  def selectCustomerByLastnameDB(lastname: String): Unit = {
-    val driver = "com.mysql.cj.jdbc.Driver"
-    val url = "jdbc:mysql://localhost:3306/theSbank"
-    val username = "root"
-    val password = "FtE73.mP11"
-
-    var connection: Connection = null
-    try {
-      Class.forName(driver)
-      connection = DriverManager.getConnection(url, username, password)
-
-      val statement = connection.createStatement()
-      val resultSet = statement.executeQuery(s"SELECT * FROM accounts WHERE client_last_name LIKE '%$lastname%' ")
-      while (resultSet.next()) {
-        val username = resultSet.getString("client_username")
-        val first_name = resultSet.getString("client_first_name")
-        val last_name = resultSet.getString("client_last_name")
-        val DOB = resultSet.getString("client_date_of_birth")
-        val balance = resultSet.getDouble("balance")
-        val interestRate = resultSet.getDouble("interest_rate")
-        val creditCard = resultSet.getString("credit_card")
-        val id = resultSet.getInt("id")
-
-        println(s"Account number: ${id}\n" +
-          s"Username: ${username}\n" +
-          s"First name: ${first_name}\n" +
-          s"Last name: ${last_name}\n" +
-          s"Client date of birth: ${DOB}\n" +
-          s"Account balance: ${balance}\n" +
-          s"Account interest rate: ${interestRate}\n" +
-          s"Account credit card number: ${creditCard}\n" +
-          s"------------------------------\n")
-      }
-    }
-  }
-
-  def balanceDB(user:String): Unit = {
+  def balanceDB(user: String): Unit = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
@@ -157,40 +86,17 @@ object methods extends App {
       val statement = connection.createStatement()
       val resultSet = statement.executeQuery(s"SELECT * FROM accounts WHERE client_username LIKE '%$user%' ")
       while (resultSet.next()) {
-        val username = resultSet.getString("client_username")
-        val first_name = resultSet.getString("client_first_name")
         val balance = resultSet.getDouble("balance")
 
 
-        println(f"Your balance is £${balance}%2.2f\n" +
-          s"------------------------------\n")
+        println(f"Your current balance is £${balance}%2.2f\n")
+        //          s"\n------------------------------------\n")
         balance
       }
     }
   }
 
-  def moneyToAddDB(user: String): Unit = {
-    val driver = "com.mysql.cj.jdbc.Driver"
-    val url = "jdbc:mysql://localhost:3306/theSbank"
-    val username = "root"
-    val password = "FtE73.mP11"
-    var connection: Connection = null
-    try {
-      Class.forName(driver)
-      connection = DriverManager.getConnection(url, username, password)
-
-      val statement = connection.createStatement()
-      val resultSet = statement.executeQuery(s"SELECT * FROM accounts WHERE client_username LIKE '%$user%' ")
-      while (resultSet.next()) {
-        val balance = resultSet.getDouble("balance")
-
-        println(f"Your current balance is ${balance}%2.2f\n" +
-          s"------------------------------\n")
-      }
-    }
-  }
-
-  def addingMoneyDB(user:String, newBalanceMoney: Double): Unit = {
+  def addingMoneyDB(user: String, newBalanceMoney: Double): Unit = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
@@ -211,13 +117,12 @@ object methods extends App {
 
         val statement2 = connection.createStatement()
         val resultSet2 = statement2.executeUpdate(s"UPDATE accounts SET balance = ${newBalance} WHERE client_username LIKE '%$user%'")
-          println(f"Your new balance is £${newBalance}%2.2f")
+        println(f"Your new balance is £${newBalance}%2.2f")
       }
     }
   }
-//  addingMoneyDB("Clark", 400)
 
-  def withdrawnBalanceDB(user:String): Unit = {
+  def withdrawnBalanceDB(user: String): Unit = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
@@ -265,7 +170,7 @@ object methods extends App {
     }
   }
 
-  def deleteDBAccount(user:String): Unit = {
+  def deleteDBAccount(user: String): Unit = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
@@ -285,48 +190,6 @@ object methods extends App {
         val resultSet2 = statement2.executeUpdate(s"DELETE FROM accounts WHERE client_username LIKE '%$user%'")
       }
     }
-  }
-
-  def adminDeleteDBAccount(userAccountDeletion:Int): Unit = {
-    val driver = "com.mysql.cj.jdbc.Driver"
-    val url = "jdbc:mysql://localhost:3306/theSbank"
-    val username = "root"
-    val password = "FtE73.mP11"
-    var connection: Connection = null
-    try {
-      Class.forName(driver)
-      connection = DriverManager.getConnection(url, username, password)
-
-      val statement = connection.createStatement()
-      val resultSet = statement.executeUpdate(s"DELETE FROM accounts WHERE id = ${userAccountDeletion}")
-    }
-  }
-
-  def userLoginDB(usernameInput:String, passwordInput:String): Boolean = {
-    val driver = "com.mysql.cj.jdbc.Driver"
-    val url = "jdbc:mysql://localhost:3306/theSbank"
-    val username = "root"
-    val password = "FtE73.mP11"
-
-    var connection: Connection = null
-    try {
-      Class.forName(driver)
-      connection = DriverManager.getConnection(url, username, password)
-
-      val statement = connection.createStatement()
-      val resultSet = statement.executeQuery(s"SELECT * FROM accounts")
-      while (resultSet.next()) {
-        val usernameDB = resultSet.getString("client_username")
-        val passwordDB = resultSet.getString("client_password")
-        val last_name = resultSet.getString("client_last_name")
-
-        if(usernameInput == usernameDB && passwordInput == passwordDB) {
-          return true
-        }
-        val currentUser:String = usernameDB
-      }
-    }
-    false
   }
 
   def checkingExistingID(idInput: Int): Boolean = {
@@ -353,30 +216,30 @@ object methods extends App {
     false
   }
 
-  def adminLoginDB(usernameInput: String, passwordInput: String): Boolean = {
+  /*
+  def CCDB(): String = {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/theSbank"
     val username = "root"
     val password = "FtE73.mP11"
-
     var connection: Connection = null
+
     try {
       Class.forName(driver)
       connection = DriverManager.getConnection(url, username, password)
 
       val statement = connection.createStatement()
-      val resultSet = statement.executeQuery(s"SELECT * FROM admins")
+      val resultSet = statement.executeQuery(s"SELECT credit_card FROM accounts")
       while (resultSet.next()) {
-        val adminDB = resultSet.getString("username")
-        val passwordDB = resultSet.getString("password")
+        val CC = resultSet.getString("credit_card")
+        var newCC = Random.between(1000000000000000L,9999999999999999L).toString
+        while(!CC.contains(newCC)) {
 
-        if (usernameInput == adminDB && passwordInput == passwordDB) {
-          return true
+          println(s"new ${newCC}")
         }
-        val currentAdmin: String = adminDB
       }
     }
-    false
   }
+  CCDB()
+   */
 }
-
